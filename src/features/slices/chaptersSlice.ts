@@ -2,6 +2,8 @@ import { ChaptersInitialState } from '../../interfaces/Chapter';
 
 import { createSlice } from '@reduxjs/toolkit';
 
+import { fetchChapters } from '../thunks/chaptersThunk';
+
 const initialState: ChaptersInitialState = {
   chapters: [],
   status: 'idle',
