@@ -4,7 +4,7 @@ import LibrarySection from './LibrarySection';
 
 export default function MainLayout() {
   return (
-    <div className="flex flex-row items-center justify-evenly w-full h-full">
+    <div className="flex flex-row items-center justify-evenly w-full h-screen">
       <LibrarySection />
       <Outlet />
     </div>

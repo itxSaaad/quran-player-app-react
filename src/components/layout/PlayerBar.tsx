@@ -7,126 +7,22 @@ import {
   BsVolumeDownFill,
 } from 'react-icons/bs';
 import { MdSkipNext, MdSkipPrevious } from 'react-icons/md';
+import store, { RootState } from '../../features/store';
+import { useSelector } from 'react-redux';
 
 export default function PlayerBar() {
-  const songs = [
-    {
-      id: '1234',
-      title: 'Song Title',
-      subtitle: 'Song Subtitle',
-      hub: {
-        actions: [
-          {
-            uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-          },
-        ],
-      },
-    },
-    {
-      id: '5678',
-      title: 'Song Title',
-      subtitle: 'Song Subtitle',
-      hub: {
-        actions: [
-          {
-            uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-          },
-        ],
-      },
-    },
-    {
-      id: '91011',
-      title: 'Song Title',
-      subtitle: 'Song Subtitle',
-      hub: {
-        actions: [
-          {
-            uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-          },
-        ],
-      },
-    },
-    {
-      id: '121314',
-      title: 'Song Title',
-      subtitle: 'Song Subtitle',
-      hub: {
-        actions: [
-          {
-            uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-          },
-        ],
-      },
-    },
-  ];
+  const dispatch = useDispatch<typeof store.dispatch>();
 
-  const ref = useRef<HTMLAudioElement>(null);
-  const [value, setValue] = useState(0);
-  const min = 0;
-  const [max, setMax] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [activeSong, setActiveSong] = useState(songs[0]); // Set initial active song
-  const [volume, setVolume] = useState(1);
+  const playerDetails = useSelector((state: RootState) => state.player);
 
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.volume = volume;
-    }
-  }, [volume]);
-
-  const handlePlayPause = () => {
-    if (ref.current) {
-      if (isPlaying) {
-        ref.current.pause();
-      } else {
-        ref.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const handleNextSong = () => {
-    const currentIndex = songs.findIndex((song) => song.id === activeSong.id);
-    const nextIndex = (currentIndex + 1) % songs.length;
-    setActiveSong(songs[nextIndex]);
-    setIsPlaying(false);
-  };
-
-  const handlePrevSong = () => {
-    const currentIndex = songs.findIndex((song) => song.id === activeSong.id);
-    const prevIndex = (currentIndex - 1 + songs.length) % songs.length;
-    setActiveSong(songs[prevIndex]);
-    setIsPlaying(false);
-  };
-
-  const onEnded = () => {
-    handleNextSong();
-  };
-
-  const onTimeUpdate = () => {
-    if (ref.current) {
-      setValue(ref.current.currentTime);
-    }
-  };
-
-  const onLoadedData = () => {
-    if (ref.current) {
-      setMax(ref.current.duration);
-    }
-  };
-
-  const onInput = (e: ChangeEvent<HTMLInputElement>) => {
-    if (ref.current) {
-      ref.current.currentTime = parseFloat(e.target.value);
-      setValue(parseFloat(e.target.value));
-    }
-  };
-
-  const getTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-  };
+  const {
+    isPlaying,
+    currentAudioURL,
+    nextSurahID,
+    prevSurahID,
+    currentPlayingSurahName,
+    currentReciterName,
+  } = playerDetails;
 
   return (
     <section className="absolute h-28 bottom-0 left-0 right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl z-10">
@@ -146,9 +42,9 @@ export default function PlayerBar() {
 
           <div className="w-[50%]">
             <p className="truncate text-white font-bold text-lg">
-              {activeSong?.title}
+              {currentPlayingSurahName}
             </p>
-            <p className="truncate text-gray-300">{activeSong?.subtitle}</p>
+            <p className="truncate text-gray-300">{currentReciterName}</p>
           </div>
         </div>
 
@@ -201,13 +97,13 @@ export default function PlayerBar() {
             <p className="text-white">{max === 0 ? '0:00' : getTime(max)}</p>
           </div>
           <audio
-            src={activeSong?.hub?.actions[0]?.uri}
+            src={currentAudioURL}
             ref={ref}
             onEnded={onEnded}
             onTimeUpdate={onTimeUpdate}
             onLoadedData={onLoadedData}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
+            onPlay={handlePlay}
+            onPause={handlePause}
           />
         </div>
 

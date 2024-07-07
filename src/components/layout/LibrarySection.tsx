@@ -35,7 +35,7 @@ export default function LibrarySection() {
               className="flex flex-col sm:flex-row justify-center sm:justify-start items-center text-sm font-medium text-gray-400 hover:text-cyan-400 animate-slowfade"
             >
               <FaBookReader className="w-6 h-6 mb-2 sm:mb-0 sm:mr-2" />
-              <span className="sm:inline-block hidden">All Recitors</span>
+              <span className="sm:inline-block hidden">All Reciters</span>
             </NavLink>
           </li>
         </ul>

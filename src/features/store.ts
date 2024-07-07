@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import chapterReducer from './slices/chaptersSlice';
 import reciterReducer from './slices/recitersSlice';
+import playerReducer from './slices/playerSlice';
 
 const store = configureStore({
   reducer: {
     chapters: chapterReducer,
     reciters: reciterReducer,
+    player: playerReducer,
   },
 });
 
