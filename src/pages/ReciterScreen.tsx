@@ -30,7 +30,7 @@ export default function ReciterScreen() {
   const chapters = chapterState.chapters;
 
   const handlePlay = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    e: React.MouseEvent<HTMLButtonElement>,
     id: number,
     name_simple: string,
     name_arabic: string,
@@ -107,15 +107,6 @@ export default function ReciterScreen() {
                 {chapters.map((chapter: Chapter) => (
                   <li
                     key={chapter.id}
-                    onClick={(e) =>
-                      handlePlay(
-                        e,
-                        chapter.id,
-                        chapter.name_simple,
-                        chapter.name_arabic,
-                        chapter.translated_name
-                      )
-                    }
                     className="flex flex-col md:flex-row items-center justify-between p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm rounded-lg"
                   >
                     <div className="flex flex-col items-center md:items-start justify-center">
@@ -137,11 +128,21 @@ export default function ReciterScreen() {
                         {chapter.revelation_order}
                       </p>
                     </div>
-                    <BsFillPlayFill
-                      size={30}
-                      color="#FFF"
-                      className="cursor-pointer hover:text-cyan-400 animate-slowfade mt-4 md:mt-0"
-                    />
+                    <button
+                      title="Play Surah"
+                      onClick={(e) =>
+                        handlePlay(
+                          e,
+                          chapter.id,
+                          chapter.name_simple,
+                          chapter.name_arabic,
+                          chapter.translated_name
+                        )
+                      }
+                      className="bg-cyan-500 text-white p-2 rounded-full hover:bg-cyan-600 transition duration-300 mt-4 md:mt-0"
+                    >
+                      <BsFillPlayFill size={30} color="#FFF" />
+                    </button>
                   </li>
                 ))}
               </ul>

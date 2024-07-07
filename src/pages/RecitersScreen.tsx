@@ -47,7 +47,7 @@ export default function RecitersScreen() {
           {visibleCount < reciters.length && (
             <button
               onClick={showMore}
-              className="mx-auto bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 mb-20"
+              className="mx-auto bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 mt-4 mb-28 sm:mb-20"
             >
               Show More
             </button>
