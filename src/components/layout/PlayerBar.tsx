@@ -1,4 +1,6 @@
-import { useEffect, useState, useRef, ChangeEvent } from 'react';
+import store, { RootState } from '../../features/store';
+
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import {
   BsFillPauseFill,
   BsFillPlayFill,
@@ -7,14 +9,24 @@ import {
   BsVolumeDownFill,
 } from 'react-icons/bs';
 import { MdSkipNext, MdSkipPrevious } from 'react-icons/md';
-import store, { RootState } from '../../features/store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  setCurrentPlayingSurah,
+  setIsPlaying,
+} from '../../features/slices/playerSlice';
 
 export default function PlayerBar() {
+  const [value, setValue] = useState(0);
+  const min = 0;
+  const [max, setMax] = useState(0);
+  const [volume, setVolume] = useState(1);
+
+  const ref = useRef<HTMLAudioElement>(null);
+
   const dispatch = useDispatch<typeof store.dispatch>();
 
   const playerDetails = useSelector((state: RootState) => state.player);
-
   const {
     isPlaying,
     currentAudioURL,
@@ -24,17 +36,98 @@ export default function PlayerBar() {
     currentReciterName,
   } = playerDetails;
 
+  const chapterState = useSelector((state: RootState) => state.chapters);
+  const chapters = chapterState.chapters;
+
+  const findSurah = (id: number) => {
+    const surah = chapters.find((chapter) => chapter.id === id);
+
+    return {
+      id: id,
+      name: surah?.name_simple,
+      nameArabic: surah?.name_arabic,
+      nameEnglish: surah?.translated_name.language_name,
+    };
+  };
+
+  const onInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(parseFloat(e.target.value));
+    ref.current!.currentTime = parseFloat(e.target.value);
+  };
+
+  const onTimeUpdate = () => {
+    setValue(ref.current!.currentTime);
+  };
+
+  const onLoadedData = () => {
+    setMax(ref.current!.duration);
+  };
+
+  const onEnded = () => {
+    dispatch(setCurrentPlayingSurah(findSurah(nextSurahID)));
+  };
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      ref.current!.pause();
+    } else {
+      ref.current!.play();
+    }
+  };
+
+  const handlePlay = () => {
+    dispatch(setIsPlaying(true));
+  };
+
+  const handlePause = () => {
+    dispatch(setIsPlaying(false));
+  };
+
+  const handleNextSong = () => {
+    dispatch(setCurrentPlayingSurah(findSurah(nextSurahID)));
+  };
+
+  const handlePrevSong = () => {
+    if (prevSurahID === 0) {
+      return;
+    }
+    dispatch(setCurrentPlayingSurah(findSurah(prevSurahID)));
+  };
+
+  useEffect(() => {
+    if (isPlaying) {
+      ref.current!.play();
+    } else {
+      ref.current!.pause();
+    }
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.volume = volume;
+    }
+  }, [volume]);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.src = currentAudioURL;
+      ref.current.play();
+    }
+  }, [currentAudioURL]);
+
+  const getTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
   return (
     <section className="absolute h-28 bottom-0 left-0 right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl z-10">
       <div className="relative sm:px-12 px-8 w-full flex items-center justify-between">
         <div className="flex-1 flex items-center justify-start">
-          <div
-            className={`${
-              isPlaying ? 'animate-[spin_3s_linear_infinite]' : ''
-            } hidden sm:block h-16 w-16 mr-4`}
-          >
+          <div className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 mr-4">
             <img
-              src="https://via.placeholder.com/50"
+              src="/android-chrome-192x192.png"
               alt="cover art"
               className="rounded-full"
             />

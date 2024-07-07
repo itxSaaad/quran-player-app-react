@@ -11,6 +11,10 @@ import Loader from '../components/ui/Loader';
 
 import { fetchChapters } from '../features/thunks/chaptersThunk';
 import { fetchReciters } from '../features/thunks/reciterThunks';
+import {
+  setCurrentPlayingSurah,
+  setCurrentReciter,
+} from '../features/slices/playerSlice';
 
 export default function ReciterScreen() {
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -18,25 +22,53 @@ export default function ReciterScreen() {
   const { id } = useParams();
 
   const reciterState = useSelector((state: RootState) => state.reciters);
-  const recitor = reciterState.reciters.find(
+  const reciter = reciterState.reciters.find(
     (reciter: Reciter) => reciter.id === id
   );
 
   const chapterState = useSelector((state: RootState) => state.chapters);
   const chapters = chapterState.chapters;
 
+  const handlePlay = (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    id: number,
+    name_simple: string,
+    name_arabic: string,
+    translated_name: { language_name: string }
+  ) => {
+    e.preventDefault();
+    dispatch(
+      setCurrentReciter({
+        serverURL: reciter?.Server,
+        name: reciter?.name,
+        id: reciter?.id,
+      })
+    );
+    if (chapters) {
+      dispatch(
+        setCurrentPlayingSurah({
+          id: id,
+          name: name_simple,
+          nameArabic: name_arabic,
+          nameEnglish: translated_name.language_name,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     const fetchSurahs = () => {
       dispatch(fetchChapters());
     };
 
-    if (!recitor) {
+    if (!reciter) {
       dispatch(fetchReciters());
     }
-    if (recitor && chapters.length === 0) {
+
+    if (reciter && chapters.length === 0) {
       fetchSurahs();
     }
-  }, [dispatch, recitor, chapters]);
+  }, [dispatch, reciter, chapters]);
 
   return (
     <main className="w-full sm:w-3/4 h-full flex flex-col p-4 sm:p-8 overflow-x-hidden">
@@ -59,10 +91,10 @@ export default function ReciterScreen() {
               />
               <div className="flex flex-col items-center md:items-start justify-center mt-4 md:mt-0 ml-0 md:ml-4">
                 <h2 className="text-md md:text-lg font-bold text-white">
-                  {recitor?.name}
+                  {reciter?.name}
                 </h2>
                 <p className="text-gray-400 mt-2 text-center md:text-left">
-                  {recitor?.rewaya}
+                  {reciter?.rewaya}
                 </p>
               </div>
             </div>
@@ -75,6 +107,15 @@ export default function ReciterScreen() {
                 {chapters.map((chapter: Chapter) => (
                   <li
                     key={chapter.id}
+                    onClick={(e) =>
+                      handlePlay(
+                        e,
+                        chapter.id,
+                        chapter.name_simple,
+                        chapter.name_arabic,
+                        chapter.translated_name
+                      )
+                    }
                     className="flex flex-col md:flex-row items-center justify-between p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm rounded-lg"
                   >
                     <div className="flex flex-col items-center md:items-start justify-center">

@@ -11,8 +11,8 @@ const initialState: PlayerInitialState = {
   currentPlayingSurahNameArabic: '',
   currentPlayingSurahNameEnglish: '',
   currentAudioURL: '',
-  nextSurahID: '',
-  prevSurahID: '',
+  nextSurahID: 0,
+  prevSurahID: 0,
   isPlaying: false,
 };
 
@@ -34,15 +34,32 @@ const playerSlice = createSlice({
         '00' + action.payload.id
       ).slice(-3)}.mp3`;
       state.isPlaying = true;
-      // ids are strings, so we need to convert them to numbers before doing math
-      state.nextSurahID = (parseInt(action.payload.id, 10) + 1).toString();
-      state.prevSurahID = (parseInt(action.payload.id, 10) - 1).toString();
+      state.nextSurahID = action.payload.id + 1;
+      state.prevSurahID = action.payload.id - 1;
     },
     setNextSurah: (state, action) => {
-      state.nextSurahID = action.payload;
+      state.currentPlayingSurahID = action.payload.id;
+      state.currentPlayingSurahName = action.payload.name;
+      state.currentPlayingSurahNameArabic = action.payload.nameArabic;
+      state.currentPlayingSurahNameEnglish = action.payload.nameEnglish;
+      state.currentAudioURL = `${state.currentReciterServerURL}/${(
+        '00' + action.payload.id
+      ).slice(-3)}.mp3`;
+      state.isPlaying = true;
+      state.nextSurahID = action.payload.id + 1;
+      state.prevSurahID = action.payload.id - 1;
     },
     setPrevSurah: (state, action) => {
-      state.prevSurahID = action.payload;
+      state.currentPlayingSurahID = action.payload.id;
+      state.currentPlayingSurahName = action.payload.name;
+      state.currentPlayingSurahNameArabic = action.payload.nameArabic;
+      state.currentPlayingSurahNameEnglish = action.payload.nameEnglish;
+      state.currentAudioURL = `${state.currentReciterServerURL}/${(
+        '00' + action.payload.id
+      ).slice(-3)}.mp3`;
+      state.isPlaying = true;
+      state.nextSurahID = action.payload.id + 1;
+      state.prevSurahID = action.payload.id - 1;
     },
     setIsPlaying: (state, action) => {
       state.isPlaying = action.payload;

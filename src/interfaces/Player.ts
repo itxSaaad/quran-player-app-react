@@ -7,8 +7,8 @@ interface PlayerInitialState {
   currentPlayingSurahNameArabic: string;
   currentPlayingSurahNameEnglish: string;
   currentAudioURL: string;
-  nextSurahID: string;
-  prevSurahID: string;
+  nextSurahID: number;
+  prevSurahID: number;
   isPlaying: boolean;
 }
 export type { PlayerInitialState };
