@@ -1,12 +1,17 @@
 import { RecitersResponse } from '../../interfaces/Reciter';
+import { RootState } from '../store';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import axios from 'axios';
 
 const fetchReciters = createAsyncThunk<
   RecitersResponse,
   void,
-  { rejectValue: string }
+  {
+    rejectValue: string;
+    state: RootState;
+  }
 >('reciters/fetchReciters', async (_, { rejectWithValue }) => {
   try {
     const { data } = await axios.get<RecitersResponse>(

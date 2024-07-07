@@ -1,5 +1,5 @@
-import { RootState } from '../features/store';
-import { Reciter, RecitersResponse } from '../interfaces/Reciter';
+import store, { RootState } from '../features/store';
+import { Reciter } from '../interfaces/Reciter';
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,18 +12,14 @@ import { fetchReciters } from '../features/thunks/reciterThunks';
 export default function DiscoverScreen() {
   const [visibleCount, setVisibleCount] = useState(10);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<typeof store.dispatch>();
   const reciters = useSelector((state: RootState) => state.reciters.reciters);
 
   useEffect(() => {
-    const fetchRecitersIfNeeded = () => {
-      if (!reciters.length) {
-        dispatch(fetchReciters({}));
-      }
-    };
-
-    fetchRecitersIfNeeded();
-  }, [dispatch, reciters.length]);
+    if (reciters.length === 0) {
+      dispatch(fetchReciters());
+    }
+  }, [dispatch, reciters]);
 
   const showMore = () => {
     setVisibleCount((prevCount) => prevCount + 10);

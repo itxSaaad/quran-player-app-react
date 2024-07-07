@@ -14,9 +14,19 @@ const chaptersSlice = createSlice({
   name: 'chapters',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchChapters.pending, (state) => {
+      state.status = 'loading';
+    });
+    builder.addCase(fetchChapters.fulfilled, (state, action) => {
+      state.status = 'success';
+      state.chapters = action.payload.chapters;
+    });
+    builder.addCase(fetchChapters.rejected, (state, action) => {
+      state.status = 'idle';
+      state.error = action.payload as string;
+    });
+  },
 });
-
-export const {} = chaptersSlice.actions;
 
 export default chaptersSlice.reducer;
