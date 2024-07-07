@@ -9,15 +9,15 @@ import './App.css';
 
 import MainLayout from './components/layout/MainLayout';
 import PlayerBar from './components/layout/PlayerBar';
-import MainSection from './pages/MainSection';
+import DiscoverScreen from './pages/DiscoverScreen';
 import PlaylistScreen from './pages/PlaylistScreen';
 
 function App() {
   const routes = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<MainSection />} />
-        <Route path="playlist/:id" element={<PlaylistScreen />} />
+        <Route index element={<DiscoverScreen />} />
+        <Route path="/reciter/:id" element={<PlaylistScreen />} />
       </Route>
     )
   );

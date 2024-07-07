@@ -14,9 +14,20 @@ const recitersSlice = createSlice({
   name: 'reciters',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchReciters.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchReciters.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.reciters = action.payload.reciters;
+      })
+      .addCase(fetchReciters.rejected, (state, action) => {
+        state.status = 'idle';
+        state.error = action.payload as string;
+      });
+  },
 });
-
-export const {} = recitersSlice.actions;
 
 export default recitersSlice.reducer;

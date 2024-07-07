@@ -1,4 +1,16 @@
-interface Reciter {}
+interface Reciter {
+  id: string;
+  name: string;
+  Server: string;
+  rewaya: string;
+  count: string;
+  letter: string;
+  suras: string;
+}
+
+interface RecitersResponse {
+  reciters: Reciter[];
+}
 
 interface RecitersInitialState {
   reciters: Reciter[];
@@ -6,4 +18,4 @@ interface RecitersInitialState {
   error: string;
 }
 
-export type { Reciter, RecitersInitialState };
+export type { Reciter, RecitersResponse, RecitersInitialState };
