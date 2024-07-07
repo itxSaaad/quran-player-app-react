@@ -16,7 +16,7 @@ export default function ReciterCard({ key, reciter }: ReciterCardProps) {
     >
       <div className="relative w-full h-48 sm:h-56 group">
         <img
-          src="/android-chrome-192x192.png"
+          src="/images/reciter-avi.avif"
           alt="reciter-cover-art"
           className="w-full h-full rounded-lg object-cover"
         />

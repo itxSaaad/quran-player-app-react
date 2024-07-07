@@ -189,6 +189,7 @@ export default function PlayerBar() {
               {value === 0 ? '0:00' : getTime(value)}
             </p>
             <input
+              title="Seekbar"
               type="range"
               step="any"
               value={value}
@@ -231,6 +232,7 @@ export default function PlayerBar() {
             />
           )}
           <input
+            title="Volume Slider"
             type="range"
             step="any"
             value={volume}

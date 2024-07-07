@@ -10,14 +10,17 @@ import './App.css';
 import MainLayout from './components/layout/MainLayout';
 import PlayerBar from './components/layout/PlayerBar';
 import DiscoverScreen from './pages/DiscoverScreen';
-import PlaylistScreen from './pages/PlaylistScreen';
+import ReciterScreen from './pages/ReciterScreen';
+import RecitersScreen from './pages/RecitersScreen';
 
 function App() {
   const routes = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
         <Route index element={<DiscoverScreen />} />
-        <Route path="/reciter/:id" element={<PlaylistScreen />} />
+        <Route path="/reciters" element={<RecitersScreen />} />
+        <Route path="/reciter/:id" element={<ReciterScreen />} />
+        <Route path="*" element={<DiscoverScreen />} />
       </Route>
     )
   );

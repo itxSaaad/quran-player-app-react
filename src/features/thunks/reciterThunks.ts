@@ -19,9 +19,7 @@ const fetchReciters = createAsyncThunk<
     );
 
     // Filter reciters based on suras count
-    data.reciters = data.reciters.filter(
-      (reciter) => reciter.suras.split(',').length === 114
-    );
+    data.reciters = data.reciters.filter((reciter) => reciter.count === '114');
 
     return data;
   } catch (error) {

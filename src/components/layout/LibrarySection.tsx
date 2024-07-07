@@ -2,6 +2,7 @@ import { HiOutlineHome } from 'react-icons/hi';
 import { NavLink } from 'react-router-dom';
 
 import '/android-chrome-192x192.png';
+import { FaBookReader } from 'react-icons/fa';
 
 export default function LibrarySection() {
   return (
@@ -25,7 +26,16 @@ export default function LibrarySection() {
               className="flex flex-col sm:flex-row justify-center sm:justify-start items-center text-sm font-medium text-gray-400 hover:text-cyan-400 animate-slowfade"
             >
               <HiOutlineHome className="w-6 h-6 mb-2 sm:mb-0 sm:mr-2" />
-              <span className="sm:inline-block hidden">Home</span>
+              <span className="sm:inline-block hidden">Discover</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/reciters"
+              className="flex flex-col sm:flex-row justify-center sm:justify-start items-center text-sm font-medium text-gray-400 hover:text-cyan-400 animate-slowfade"
+            >
+              <FaBookReader className="w-6 h-6 mb-2 sm:mb-0 sm:mr-2" />
+              <span className="sm:inline-block hidden">All Recitors</span>
             </NavLink>
           </li>
         </ul>
