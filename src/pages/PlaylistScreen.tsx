@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { BsFillPlayFill } from 'react-icons/bs';
 
 export default function PlaylistScreen() {
-  const [surahs, setSurahs] = useState<Surah[]>([
+  const surahs = [
     {
       id: 1,
       name: 'Surah Name',
@@ -13,7 +12,7 @@ export default function PlaylistScreen() {
       name: 'Surah Name',
       description: 'Surah Description',
     },
-  ]);
+  ];
 
   return (
     <main className="w-full md:w-3/4 h-full flex flex-col p-4 md:p-8 overflow-scroll">

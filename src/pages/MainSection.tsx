@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import PlaylistCard from '../components/library/PlaylistCard';
 import SearchBar from '../components/layout/SearchBar';
+import PlaylistCard from '../components/library/PlaylistCard';
 
 export default function MainSection() {
-  const [reciters, setReciters] = useState<Reciter[]>([
+  const reciters = [
     {
       id: '1234',
       name: 'Reciter Name',
@@ -64,7 +63,7 @@ export default function MainSection() {
       description: 'Reciter Description',
       image: 'https://via.placeholder.com/300',
     },
-  ]);
+  ];
 
   return (
     <main className="w-full sm:w-3/4 h-full flex flex-col p-4 sm:p-8 overflow-scroll">
