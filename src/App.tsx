@@ -7,23 +7,17 @@ import {
 
 import './App.css';
 
-import MainSection from './components/layout/MainSection';
-import PlayerBar from './components/layout/PlayerBar';
 import MainLayout from './components/layout/MainLayout';
+import PlayerBar from './components/layout/PlayerBar';
+import MainSection from './pages/MainSection';
+import PlaylistScreen from './pages/PlaylistScreen';
 
 function App() {
   const routes = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
         <Route index element={<MainSection />} />
-        <Route
-          path="playlist/:id"
-          element={
-            <main className="w-3/4 h-full">
-              <h1>Playlist</h1>
-            </main>
-          }
-        />
+        <Route path="playlist/:id" element={<PlaylistScreen />} />
       </Route>
     )
   );
