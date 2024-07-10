@@ -1,6 +1,6 @@
 # Quran Player App - React
 
-> A simple Birthday Reminder App built with React.js and Redux/Toolkit. The app allows users to add, edit, delete, and clear all birthdays. The app is fully responsive and user-friendly.
+> A Quran Player application built with React, Redux Toolkit, Tailwind CSS, TypeScript, and online API links using Redux Async Thunk. The app allows users to list and play Quranic recitations by various reciters.
 
 <br />
 
@@ -31,14 +31,13 @@
 
 ## Features
 
-- **Play Audio:** Listen to Quranic recitations from various reciters
-- **View Verses:** View Quranic verses with English and Urdu translations
-- **Save Favorites:** Save favorite verses to cookies
+- **List All Reciters:** View a list of all available reciters.
+- **Top Reciters on Discover Page:** Discover the top reciters.
+- **List All Surahs for Each Reciter:** View all surahs for a selected reciter.
+- **Play Surah:** Play the first surah by clicking on the reciter's image.
+- **Surah Player:** Play the desired surah from the list of surahs.
+- **Music Player Controls:** Next, Previous, Pause, Mute, Volume control, and Seekbar.
 - **Responsive Design:** User-friendly interfaces designed for various screen sizes
-- **Spotify-like interface.**
-- **Search Feature:** Search for specific recitor
-- **Loading Spinner:** Display loading spinner while fetching data
-- **Toast Notifications:** Display toast notifications for user actions
 
 ## Built With
 
