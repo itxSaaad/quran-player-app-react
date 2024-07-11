@@ -1,12 +1,19 @@
-import { FiSearch } from 'react-icons/fi';
 import { useState } from 'react';
+import { FiSearch } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Search for:', searchTerm);
+
+    if (searchTerm.trim() === '') {
+      navigate('/');
+    } else {
+      navigate(`/search/${searchTerm}`);
+    }
   };
 
   return (

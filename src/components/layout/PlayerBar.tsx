@@ -121,6 +121,11 @@ export default function PlayerBar() {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
+  const ReciterName =
+    currentReciterName.length > 10
+      ? currentReciterName.slice(0, 18) + '...'
+      : currentReciterName;
+
   return (
     <section className="absolute h-28 bottom-0 left-0 right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl z-10">
       <div className="relative sm:px-12 px-8 w-full flex items-center justify-between">
@@ -133,11 +138,11 @@ export default function PlayerBar() {
             />
           </div>
 
-          <div className="w-[50%]">
+          <div className="w-1/2">
             <p className="truncate text-white font-bold text-lg">
               {currentPlayingSurahName}
             </p>
-            <p className="truncate text-gray-300">{currentReciterName}</p>
+            <p className="truncate text-gray-300">{ReciterName}</p>
           </div>
         </div>
 

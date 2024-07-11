@@ -1,3 +1,6 @@
+import { RootState } from './features/store';
+
+import { useSelector } from 'react-redux';
 import {
   Route,
   RouterProvider,
@@ -12,8 +15,7 @@ import PlayerBar from './components/layout/PlayerBar';
 import DiscoverScreen from './pages/DiscoverScreen';
 import ReciterScreen from './pages/ReciterScreen';
 import RecitersScreen from './pages/RecitersScreen';
-import { useSelector } from 'react-redux';
-import { RootState } from './features/store';
+import SearchScreen from './pages/SearchScreen';
 
 function App() {
   const routes = createBrowserRouter(
@@ -22,6 +24,7 @@ function App() {
         <Route index element={<DiscoverScreen />} />
         <Route path="/reciters" element={<RecitersScreen />} />
         <Route path="/reciter/:id" element={<ReciterScreen />} />
+        <Route path="/search/:reciter" element={<SearchScreen />} />
         <Route path="*" element={<DiscoverScreen />} />
       </Route>
     )
@@ -32,7 +35,7 @@ function App() {
   const currentTrack = playerState.currentPlayingSurahID;
 
   return (
-    <section className="flex flex-col items-center justify-center w-full h-screen bg-gradient-to-br from-black to-[#121286]">
+    <section className="flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-br from-black to-[#121286]">
       <RouterProvider router={routes} />
       {currentTrack ? <PlayerBar /> : null}
     </section>
