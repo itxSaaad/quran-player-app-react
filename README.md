@@ -1,5 +1,18 @@
 # Quran Player App - React
 
+## Architecture
+
+```mermaid
+flowchart LR
+  User -->|choose surah, reciter, and playback controls| UI[React and Redux Toolkit UI\nVercel deployment]
+  UI --> Thunk[Redux async thunks]
+  Thunk --> API[Quran and recitation APIs]
+  API --> Thunk
+  Thunk --> Store[Redux store]
+  Store --> UI
+  UI --> Audio[Browser audio playback]
+```
+
 > A Quran Player application built with React, Redux Toolkit, Tailwind CSS, TypeScript, and online API links using Redux Async Thunk. The app allows users to list and play Quranic recitations by various reciters.
 
 <br />
@@ -133,3 +146,7 @@ Give ⭐️ if you like this project!
 [issues-url]: https://github.com/itxSaaad/quran-player-app-react/issues
 [license-shield]: https://img.shields.io/github/license/itxSaaad/quran-player-app-react.svg?style=for-the-badge
 [license-url]: https://github.com/itxSaaad/quran-player-app-react/blob/main/LICENSE.md
+
+## Vercel Deployment
+Vite SPA served from the repository root; client-side routes rewrite to index.html.
+See the repository-root [vercel.json](./vercel.json) for build roots and routing. Configure private values in Vercel Project Settings; never commit secrets.
